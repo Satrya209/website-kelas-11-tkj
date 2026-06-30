@@ -1,0 +1,510 @@
+/* DARK MODE */
+[data-theme="dark"] body { 
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] header.navbar-container .nav-list li a {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] h1 {
+    color: #f60b0b;
+}
+
+[data-theme="dark"] .login-form {
+    border-color: #2d3e50;
+}
+
+[data-theme="dark"] main aside .social-media ul {
+    background-color: #f60b0b;
+}
+
+[data-theme='dark'] main .content .content-description button:hover {
+    color: #e0e0e0;
+}
+
+
+/* Light and Universal */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+
+    height: 100vh;
+    margin: 0;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Position the mode toggle in the navbar's top-right */
+.mode-container {
+    position: absolute;
+    right: 1rem;
+    top: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    z-index: 10;
+}
+
+/* Toggle switch base */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 28px;
+}
+
+.theme-switch input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: background-color 0.25s ease;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+}
+
+.slider::after {
+    content: "🌙";
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    transition: content 0.2s ease, right 0.25s ease;
+}
+
+/* Checked state */
+input:checked + .slider {
+    background-color: #0fbcf9;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+input:checked + .slider::after {
+    content: "☀️";
+}
+
+header.navbar-container {
+    width: 100%;
+    padding: 1rem 1rem 0;
+    max-width: 1200px;
+    margin-inline: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: relative;
+    z-index: 9999;
+}
+
+header.navbar-container .mode-container {
+    position: absolute;
+    right: 1rem;
+    top: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    z-index: 10;
+}
+
+header.navbar-container .nav-list {
+    position: absolute;
+    left: 1rem;
+    top: 0.9rem;
+    z-index: 10;
+}
+
+header.navbar-container .logo img {
+    width: 150px;
+}
+
+header.navbar-container .nav-list ul  {
+    padding-left: 0;
+    margin: 0;
+
+    display: flex;
+    justify-content: center; 
+    gap: 2rem 1rem;
+}
+
+header.navbar-container .nav-list li {
+    list-style-type: none;
+}
+
+header.navbar-container .nav-list li a {
+    padding: 0.5rem 1.5rem;
+    padding-top: 2px;
+    border-radius: 999px;
+    
+
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: black;
+
+    transition: all 0.2s ease-in-out;
+}
+
+header.navbar-container .nav-list li a {
+    background-color: #f60b0b;
+    color: white;
+}
+
+header.navbar-container .nav-list li a:hover {
+    background-color: #c10606;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+main {
+    flex: 1;
+    
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 2rem 4rem;
+
+    display: flex;
+    align-items: center;
+}
+
+main .content {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+}
+
+main .content .content-description {
+    flex: 1 1;
+}
+
+main .content .content-description .title {
+    margin-block: 1rem;
+
+    font-size: 3.5rem;
+}
+
+main .content .content-description p {
+    font-size: 1.2rem;
+    line-height: 1.7rem;
+}
+
+main .content .content-description button {
+    padding: 0.8rem 2.5rem;
+    border: 3px solid transparent;
+    border-radius: 999px;
+    margin-block-start: 1.5rem;
+
+    background-color: #f60b0b;
+
+    font-family: 'Quicksand', sans-serif;
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+
+    cursor: pointer;
+    transform: all 0.15s ease-in;
+}
+
+main .content .content-description button:hover {
+    border: 3px solid #f60b0b;
+    background-color: transparent;
+
+    color: #2d3e50;
+}
+
+main .content .content-image {
+    flex: 1;
+
+    display: flex;
+}
+
+main .content .content-image img {
+    width: 300px;
+    max-width: 250px;
+    margin: auto;
+}
+
+main aside {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-end: 0;
+}
+
+main aside .social-media {
+    height: 100%;
+    display: flex;
+}
+
+main aside .social-media ul {
+    padding: 1.5rem 1rem;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    margin: auto;
+    background-color: #2d3e50;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    gap: 1.5rem;
+}
+
+main aside .social-media li {
+    list-style-type: none;
+}
+
+main aside .social-media li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+
+    transition: all 0.1s ease-in-out;
+}
+
+main aside .social-media li a:hover {
+    color: #89b0d9;
+}
+
+@media screen and (max-width: 768px) {
+    footer p {
+        font-size: 0.95rem;
+    }
+    header.navbar-container {
+        flex-direction: column;
+    }
+
+    /* When toggle is moved into content, arrange button and toggle inline */
+    .content-description.mode-inline {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .content-description.mode-inline .title,
+    .content-description.mode-inline p {
+        width: 100%;
+    }
+
+    .content-description.mode-inline button {
+        order: 1;
+    }
+
+    .content-description.mode-inline .mode-container {
+        order: 2;
+        margin-top: 0;
+    }
+
+    /* Keep the toggle in the same header position on all screen sizes */
+    .mode-container {
+        position: absolute;
+        right: 1rem;
+        top: 0.9rem;
+        margin-top: 0;
+        display: inline-flex;
+    }
+
+    header.navbar-container .nav-list {
+        left: 1rem;
+        top: 0.9rem;
+    }
+
+    header .navbar-container .nav-list ul {
+        flex-wrap: wrap;
+        column-gap: 0.5rem;
+    }
+
+    main .content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    main .content .content-description .title {
+        font-size: 3rem;
+    }
+
+    main .content .content-description p {
+        font-size: 1rem;
+    }
+
+    main .content .content-image {
+     order: -1;
+    }
+}
+
+footer {
+    position: relative;
+    background-color: #9c1e15;
+    padding: 1.25rem 1rem;
+    text-align: center;
+}
+
+footer p {
+    margin: 0.25rem 0;
+    font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+    line-height: 1.5;
+    color: #fff;
+    font-weight: 100;
+}
+
+footer .bold {
+    font-weight: 600;
+}
+
+.login-form {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.login-form.active {
+    display: flex;
+}
+
+.login-form form {
+    background: #f0ede8;
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 520px;
+}
+
+.login-form form h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.login-form form p{
+    font-size: 14px;
+    color: #838282;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.login-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+    margin-top: 16px;
+}
+
+.login-form input,
+.login-form select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #1a1a1a;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.15;
+}
+
+.login-form input:focus,
+.login-form select:focus {
+    border-color: #1a7d6e;
+    box-shadow: 0 0 0 3px rgba(26, 125, 110, 0.1);
+}
+
+.login-form button[type="button"] {
+    background-color: #f60b0b;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.15s;
+    margin-bottom: 0;
+    display: block;
+}
+
+.login-form button[type="button"]:hover {
+    background-color: #c10606;
+}
+
+.alert {
+    position: fixed;
+    left: 50%;
+    top: 90%;
+    transform: translate(-50%, -50%);
+    z-index: 1100;
+    width: min(90vw, 520px);
+    margin: 0;
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center;
+    pointer-events: none;
+}
+
+.alert-success {
+    background-color: #e8f8ee;
+    color: #147d3b;
+    border: 1px solid #8ed4a5;
+}
+
+.alert-danger {
+    background-color: #fdecea;
+    color: #b42318;
+    border: 1px solid #f4b7b4;
+}
+
+.alert-warning {
+    background-color: #fbf3d7;
+    color: #bfb204;
+    border: 1px solid #fef134 ;
+}
