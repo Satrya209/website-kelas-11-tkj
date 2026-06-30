@@ -42,23 +42,23 @@ for (var i = 0; i < headers.length; i++) {
 
 // Galery Settings
 const photos = [
-    {src: "../assets/11semester2-1.jpeg", caption: "Foto Kelas 11 Akhir Semester"},
-    {src: "../assets/semester1-1.jpeg", caption: "Foto Kelas 10 - Batik"},
-    {src: "../assets/semester1-2.jpeg", caption: "Foto Kelas 10 - Batik"},
-    {src: "../assets/semester1-3.jpeg", caption: "Foto Kelas 10"}
+    {src: "assets/11semester2-1.jpeg", caption: "Foto Kelas 11 Akhir Semester"},
+    {src: "assets/semester1-1.jpeg", caption: "Foto Kelas 10 - Batik"},
+    {src: "assets/semester1-2.jpeg", caption: "Foto Kelas 10 - Batik"},
+    {src: "assets/semester1-3.jpeg", caption: "Foto Kelas 10"}
 ];
 
 const photos2 = [
-    {src: "../assets/foto1.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto2.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto3.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto4.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto5.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto6.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto7.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto8.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto9.jpeg", caption: "kunjungan Industri"},
-    {src: "../assets/foto10.jpeg", caption: "kunjungan Industri"}
+    {src: "assets/foto1.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto2.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto3.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto4.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto5.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto6.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto7.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto8.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto9.jpeg", caption: "kunjungan Industri"},
+    {src: "assets/foto10.jpeg", caption: "kunjungan Industri"}
 ];
 
 let current = 0;
