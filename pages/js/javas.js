@@ -1,40 +1,98 @@
     // Navbar shadow saat scroll
 const navbar = document.getElementById('navbar');
+if (navbar) {
     window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
-});
+        navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+}
 
-    // Reveal animasi saat scroll
+// Reveal animasi saat scroll
 const reveals = document.querySelectorAll('.reveal');
+if (typeof IntersectionObserver !== 'undefined') {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    reveals.forEach((el) => observer.observe(el));
+} else {
+    reveals.forEach((el) => el.classList.add('visible'));
+}
+
+// Smooth scroll untuk nav links
+const offset = 90;
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (!href || href === '#') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            const top = target.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top, behavior: 'smooth' });
         }
     });
-}, { threshold: 0.12 });
+});
 
-reveals.forEach(el => observer.observe(el));
+// Get modal and buttons
+const modal = document.getElementById('profileModal');
+const closeBtn = document.getElementById('closeModalBtn');
 
-    // Smooth scroll untuk nav links
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', e => {
+// Get all murid cards and add click handlers
+const muridCards = document.querySelectorAll('.murid-card');
+muridCards.forEach(card => {
+    const trigger = card.querySelector('.murid-card-link') || card;
+    trigger.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        // Extract data from the card
+        const img = card.querySelector('img').src;
+        const nama = card.querySelector('.nama').textContent;
+        const peran = card.dataset.peran || '';
+        const status = card.querySelector('.status') ? card.querySelector('.status').textContent : 'Aktif';
+        
+        // Populate modal
+        document.getElementById('modalImage').src = img;
+        document.getElementById('modalNama').textContent = nama;
+        document.getElementById('modalPeran').textContent = peran;
+        document.getElementById('modalStatus').textContent = status;
+        
+        // Open modal
+        modal.classList.add('active');
     });
+});
+
+// Close modal when X button is clicked
+closeBtn.addEventListener('click', function() {
+    modal.classList.remove('active');
+});
+
+// Close modal when clicking outside the modal content
+window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+        modal.classList.remove('active');
+    }
 });
 
 function toggleAccordion(header) {
     var item = header.parentElement;
-    item.classList.toggle("open");
+    if (item) {
+        item.classList.toggle('open');
+    }
 }
 
-var headers = document.querySelectorAll(".accordion-header");
+var headers = document.querySelectorAll('.accordion-header');
 
 for (var i = 0; i < headers.length; i++) {
-    headers[i].addEventListener("click", function() {
+    headers[i].addEventListener('click', function () {
         toggleAccordion(this);
     });
 }
@@ -111,55 +169,61 @@ function next2() {
 
 
 // Klik kiri foto = foto sebelumnya, kanan foto = foto selanjutnya
-galeriItem.addEventListener('click', (e) => {
-    const rect = galeriItem.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    if (clickX < rect.width / 2) {
-        prev();
-    } else {
-        next();
-    }
-});
+if (galeriItem) {
+    galeriItem.addEventListener('click', (e) => {
+        const rect = galeriItem.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        if (clickX < rect.width / 2) {
+            prev();
+        } else {
+            next();
+        }
+    });
+}
 
-galeriItem2.addEventListener('click', (e) => {
-    const rect = galeriItem2.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
+if (galeriItem2) {
+    galeriItem2.addEventListener('click', (e) => {
+        const rect = galeriItem2.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
 
-    if (clickX < rect.width / 2) {
-        prev2();
-    } else {
-        next2();
-    }
-});
+        if (clickX < rect.width / 2) {
+            prev2();
+        } else {
+            next2();
+        }
+    });
+}
 
 //Swipe for HandPhone (different device)
 let touchStartX = 0;
-galeriItem.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-});
-galeriItem.addEventListener('touchend', (e) => {
-    const diff = e.changedTouches[0].screenX - touchStartX;
-    if (diff > 50) {
-        prev();
-    }
-     else if (diff < -50) {
-        next();
-    }
-});
-
+if (galeriItem) {
+    galeriItem.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    galeriItem.addEventListener('touchend', (e) => {
+        const diff = e.changedTouches[0].screenX - touchStartX;
+        if (diff > 50) {
+            prev();
+        } else if (diff < -50) {
+            next();
+        }
+    });
+}
 
 let touchStart2X = 0;
-galeriItem2.addEventListener('touchstart', (e) => {
-    touchStart2X = e.changedTouches[0].screenX;
-});
-galeriItem2.addEventListener('touchend', (e) => {
-    const diff2 = e.changedTouches[0].screenX - touchStart2X;
-    if(diff2 > 50) {
-        prev2();
-    } else if (diff2 < -50) {
-        next2();
-    }
-});
+if (galeriItem2) {
+    galeriItem2.addEventListener('touchstart', (e) => {
+        touchStart2X = e.changedTouches[0].screenX;
+    });
+    galeriItem2.addEventListener('touchend', (e) => {
+        const diff2 = e.changedTouches[0].screenX - touchStart2X;
+        if (diff2 > 50) {
+            prev2();
+        } else if (diff2 < -50) {
+            next2();
+        }
+    });
+}
 
 render();
 render2();
