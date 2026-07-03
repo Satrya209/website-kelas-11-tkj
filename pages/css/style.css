@@ -562,14 +562,15 @@ footer {
 
 /*  ACCORDION BODY (tersembunyi by default)  */
 .accordion-body {
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   overflow: hidden;
-  transition: max-height 0.4s ease;
+  transition: grid-template-rows 0.3s ease;
 }
 
 /* Tampil saat class .open aktif */
 .accordion-item.open .accordion-body {
-  max-height: 500px;
+  grid-template-rows: 1fr;
 }
 
 /*  TABEL DI DALAM ACCORDION  */
@@ -577,6 +578,7 @@ footer {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.83rem;
+  overflow: hidden;
 }
 
 .accordion-body tr {
@@ -611,14 +613,45 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .accordion-body table,
-  .accordion-body tr,
+  .accordion-header {
+    padding: 0.9rem 0.95rem;
+    gap: 0.7rem;
+  }
+
+  .accordion-header .hari {
+    min-width: 56px;
+    font-size: 0.85rem;
+  }
+
+  .accordion-header .preview {
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+
+  .accordion-body table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .accordion-body tr {
+    display: block;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
   .accordion-body td {
     display: block;
     width: 100%;
+    padding: 0.18rem 0;
+    white-space: normal;
+  }
+
+  .accordion-body td:first-child {
+    margin-bottom: 0.15rem;
   }
 }
-
 
 
 /*  REVEAL ANIMATION  */

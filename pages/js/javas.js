@@ -84,8 +84,16 @@ window.addEventListener('click', function(event) {
 
 function toggleAccordion(header) {
     var item = header.parentElement;
-    if (item) {
-        item.classList.toggle('open');
+    if (!item) return;
+
+    var shouldOpen = !item.classList.contains('open');
+
+    document.querySelectorAll('.accordion-item').forEach(function (accordionItem) {
+        accordionItem.classList.remove('open');
+    });
+
+    if (shouldOpen) {
+        item.classList.add('open');
     }
 }
 
