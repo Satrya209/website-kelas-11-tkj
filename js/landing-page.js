@@ -28,24 +28,36 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
 const themeToggle = document.getElementById('checkbox');
 
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') { 
-    document.documentElement.setAttribute('data-theme', 'dark');
-    themeToggle.checked = false;
-} else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    themeToggle.checked = true;
+function applyTheme(theme) {
+    const resolvedTheme = theme === 'dark' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', resolvedTheme);
+    if (themeToggle) {
+        themeToggle.checked = resolvedTheme === 'light';
+    }
 }
 
-themeToggle.addEventListener('change', () => {
-    if (themeToggle.checked) {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-    }
-});
+try {
+    const savedTheme = localStorage.getItem('theme');
+    applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+} catch (error) {
+    applyTheme('light');
+}
+
+if (themeToggle) {
+    themeToggle.addEventListener('change', () => {
+        const nextTheme = themeToggle.checked ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        try {
+            localStorage.setItem('theme', nextTheme);
+        } catch (error) {
+            // Ignore storage errors in restricted browsing contexts.
+        }
+    });
+}
+
+function goToWebsite() {
+    window.location.href = 'pages/website.html';
+}
 
 // Modal
 
@@ -59,7 +71,6 @@ function openModal(e) {
     }
 
     document.getElementById('alert-success').hidden = true;
-    document.getElementById('alert-danger').hidden = true;
 }
 
 function closeModal() {
@@ -81,66 +92,84 @@ document.addEventListener('keydown', (e) => {
 
 document.getElementById('login')?.addEventListener('click', closeModalOutside);
 
-// Sign-in Array
+// ================= GOOGLE SIGN-IN =================
+const GOOGLE_CLIENT_ID = "125985264757-2jpvvedod41n1gcuh7qjjtrqg6ddgqrs.apps.googleusercontent.com";
 
-let loginUser = [];
-let usersLoadFailed = false;
-
-async function loadUsers() {
-    try {
-        const response = await fetch('data/users.json');
-        if (!response.ok) throw new Error ('Gagal Memuat Data User');
-        loginUser = await response.json();
-    } catch (error) {
-        console.error('Error memuat user.json:', error);
-        usersLoadFailed = true;
-    }
+function decodeJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+        atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
+    );
+    return JSON.parse(jsonPayload);
 }
 
-loadUsers();
+function handleGoogleCredential(response) {
+    const payload = decodeJwt(response.credential);
+    const user = {
+        name: payload.name,
+        email: payload.email,
+        picture: payload.picture
+    };
+    localStorage.setItem('googleUser', JSON.stringify(user));
+    showLoggedInUI(user);
+    closeModal();
 
-function handleLogin() {
-    const inputUsername = document.getElementById('username').value.trim();
-    const inputPassword = document.getElementById('password').value.trim();
-    const inputGender = document.getElementById('gender').value;
     const successAlert = document.getElementById('alert-success');
-    const dangerAlert = document.getElementById('alert-danger');
-    const warningAlert = document.getElementById('alert-warning');
+    successAlert.textContent = 'Login Berhasil! Selamat Datang, ' + user.name;
+    successAlert.hidden = false;
+    setTimeout(() => {
+        window.location.href = 'pages/website.html';
+    }, 1200);
+}
 
-    successAlert.hidden = true;
-    dangerAlert.hidden = true;
-    warningAlert.hidden = true;
+function showLoggedInUI(user) {
+    document.getElementById('loginNavItem').hidden = true;
+    document.getElementById('userNavItem').hidden = false;
+    document.getElementById('userAvatar').src = user.picture;
+    document.getElementById('userName').textContent = user.name;
+}
 
-    if (!inputUsername || !inputPassword || !inputGender) {
-        warningAlert.textContent = 'Harap isi semua field terlebih dahulu!';
-        warningAlert.hidden = false;
-        return;
+function showLoggedOutUI() {
+    document.getElementById('loginNavItem').hidden = false;
+    document.getElementById('userNavItem').hidden = true;
+}
+
+function logoutUser() {
+    localStorage.removeItem('googleUser');
+    if (window.google?.accounts?.id) {
+        google.accounts.id.disableAutoSelect();
     }
+    showLoggedOutUI();
+}
 
-    if (usersLoadFailed) {
-        dangerAlert.textContent = 'Gagal memuat data user. Cek koneksi atau hubungi pembuat Website. IG: @prambudisat_';
-        dangerAlert.hidden = false;
-        return;
-    }
+document.getElementById('logoutBtn')?.addEventListener('click', logoutUser);
 
-    if (loginUser.length === 0) {
-        warningAlert.textContent = 'Data user belum siap, coba beberapa saat lagi.';
-        warningAlert.hidden = false;
-        return;
-    }
+window.addEventListener('load', () => {
+    if (!window.google || !google.accounts || !google.accounts.id) return;
 
-    const userFound = loginUser.find(function(user) {
-        return user.username === inputUsername && user.password === inputPassword;
+    google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleGoogleCredential,
+        auto_select: true
     });
 
-    if (userFound) {
-        successAlert.textContent = 'Login Berhasil! Selamat Datang, ' + userFound.username;
-        successAlert.hidden = false;
-        setTimeout(() => {
-            window.location.href = 'pages/website.html';
-        }, 1200);
-    } else {
-        dangerAlert.textContent = 'Username atau Password tidak ditemukan. Silahkan coba lagi.';
-        dangerAlert.hidden = false;
+    const googleSignInDiv = document.getElementById('googleSignInDiv');
+    if (googleSignInDiv) {
+        google.accounts.id.renderButton(
+            googleSignInDiv,
+            { theme: 'outline', size: 'large', shape: 'pill', width: 280 }
+        );
     }
-}
+
+    try {
+        const saved = localStorage.getItem('googleUser');
+        if (saved) {
+            showLoggedInUI(JSON.parse(saved));
+        } else {
+            google.accounts.id.prompt();
+        }
+    } catch (error) {
+        // Ignore storage access issues in restricted environments.
+    }
+});

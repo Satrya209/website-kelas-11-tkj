@@ -406,15 +406,16 @@ footer .bold {
     display: flex;
 }
 
-.login-form form {
+.login-form .login-box {
     background: #f0ede8;
     border-radius: 16px;
     padding: 2.5rem;
     width: 100%;
     max-width: 520px;
+    text-align: center;
 }
 
-.login-form form h2 {
+.login-form .login-box h2 {
     font-size: 36px;
     font-weight: 700;
     color: #1a1a1a;
@@ -422,58 +423,60 @@ footer .bold {
     margin-top: 0;
 }
 
-.login-form form p{
+.login-form .login-box p {
     font-size: 14px;
     color: #838282;
     margin-bottom: 8px;
     margin-top: 0;
 }
 
-.login-form label {
-    display: block;
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 6px;
-    margin-top: 16px;
+.google-signin-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
 }
 
-.login-form input,
-.login-form select {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
-    color: #1a1a1a;
-    background-color: #fff;
-    outline: none;
-    transition: border-color 0.15;
-}
-
-.login-form input:focus,
-.login-form select:focus {
-    border-color: #1a7d6e;
-    box-shadow: 0 0 0 3px rgba(26, 125, 110, 0.1);
-}
-
-.login-form button[type="button"] {
+/* ===== Chip user setelah login (navbar) ===== */
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     background-color: #f60b0b;
-    color: #fff;
+    padding: 0.35rem 0.9rem 0.35rem 0.35rem;
+    border-radius: 999px;
+}
+
+.user-chip img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-chip span {
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.logout-btn {
+    background: white;
+    color: #f60b0b;
     border: none;
     border-radius: 999px;
-    padding: 14px 32px;
-    font-size: 15px;
-    font-weight: 600;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 20px;
     transition: background 0.15s;
-    margin-bottom: 0;
-    display: block;
 }
 
-.login-form button[type="button"]:hover {
-    background-color: #c10606;
+.logout-btn:hover {
+    background: #f0f0f0;
 }
 
 .alert {

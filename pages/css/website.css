@@ -872,3 +872,91 @@ footer {
   min-width: 50px;
   text-align: center;
 }
+
+/* ===== Thumbnail foto (mengikuti gaya .info-card) ===== */
+.foto-card {
+  width: 100%;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;   /* padding kiri, kanan, atas */
+  overflow: hidden;
+  border-left: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foto-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  width: 100%;
+}
+
+.foto-thumb img {
+  max-width: 100%;
+  height: 420px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.foto-thumb:hover img {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+}
+
+/* ===== Checkbox disembunyikan total ===== */
+.lightbox-toggle {
+  display: none;
+}
+
+/* ===== Overlay penuh layar ===== */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox-close {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.lightbox-img {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+  border: 3px solid var(--red);
+  border-radius: 6px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  cursor: default;
+}
+
+.lightbox-toggle:checked ~ .lightbox-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-toggle:checked ~ .lightbox-overlay .lightbox-img {
+  transform: scale(1);
+}

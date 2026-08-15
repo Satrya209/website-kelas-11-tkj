@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/page-style.css" />
+    <link rel="icon" type="image/jpeg" href="assets/logokelas.png" />
+    <link rel="stylesheet" href="css/landing_page.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,6 +19,8 @@
     />
 
     <title>Landing Page</title>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <header class="navbar-container" id="navbar">
@@ -27,7 +30,14 @@
     -->
         <nav class="nav-list">
             <ul>
-                <li><a href="#" onclick="openModal(event)" id="loginModal">LogIn</a></li>
+                <li id="loginNavItem"><a href="#" onclick="openModal(event)" id="loginModal">LogIn</a></li>
+                <li id="userNavItem" hidden>
+                    <div class="user-chip">
+                        <img id="userAvatar" src="" alt="foto profil" />
+                        <span id="userName"></span>
+                        <button type="button" id="logoutBtn" class="logout-btn">Logout</button>
+                    </div>
+                </li>
             </ul>
         </nav>
         <div class="mode-container">
@@ -46,13 +56,13 @@
                     Selamat Datang di Website Resmi Kelas XI TKJ SMK PGRI 31 Legok! Cari tahu lebih dalam mengenai kami pada website ini.
                     Website ini dibuat untuk projek HTML, CSS, dan JavaScript. Sekaligus, website ini dibuat untuk memory Murid - Murid TKJ SMK PGRI 31 Legok Angkatan ke-22. 
                 </p>
-                <button class="main-button" onclick="openModal(event)">
+                <button class="main-button" type="button" onclick="goToWebsite()">
                     Masuk
                 </button>
             </div>
 
             <div class="content-image">
-                <img src="assets/logokelas.jpeg" alt="logo-kelas" />
+                <img src="assets/logokelas.png" alt="logo-kelas" />
             </div>
         </div>
 
@@ -69,33 +79,15 @@
 
     <!-- Login -->
     <div class="login-form modal-login" id="login">
-        <form id="loginForm">
+        <div class="login-box">
             <h2>LogIn</h2>
-            <p>Masukkan Form Seperti Login WiFi Sekolah.</p>
-            <label>Username: </label>
-            <input type="text" id="username" placeholder="Isi Sesuai Dengan Kelas Anda" />
-            <label>Password: </label>
-            <input type="password" id="password" placeholder="Isi Password"/>
-            <label>Gender: </label>
-            <select id="gender">
-                <option value="" disabled selected>Pilih Gender</option>
-                <option value="Man">Man</option>
-                <option value="Woman">Woman</option>
-            </select>
-            <button class="sign-button" type="button" onclick="handleLogin()">Login</button>
-        </form>
-    </div>
-    
-    <div class="alert alert-danger" role="alert" id="alert-danger" hidden>
-        Username atau Password tidak ditemukan. Silahkan coba lagi.
+            <p>Masuk menggunakan akun Google kamu. Tidak perlu daftar akun baru.</p>
+            <div id="googleSignInDiv" class="google-signin-wrap"></div>
+        </div>
     </div>
 
     <div class="alert alert-success" role="alert" id="alert-success" hidden>
         Login Berhasil! Selamat Datang.
-    </div>
-
-    <div class="alert alert-warning" role="alert" id="alert-warning" hidden>
-        Harap isi semua field terlebih dahulu!
     </div>
 
     <footer>

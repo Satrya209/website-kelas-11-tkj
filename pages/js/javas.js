@@ -52,6 +52,7 @@ const muridCards = document.querySelectorAll('.murid-card');
 muridCards.forEach(card => {
     const trigger = card.querySelector('.murid-card-link') || card;
     trigger.addEventListener('click', function(e) {
+        if (!modal) return; // Guard against missing modal
         e.preventDefault();
         // Extract data from the card
         const img = card.querySelector('img').src;
@@ -60,10 +61,15 @@ muridCards.forEach(card => {
         const status = card.querySelector('.status') ? card.querySelector('.status').textContent : 'Aktif';
         
         // Populate modal
-        document.getElementById('modalImage').src = img;
-        document.getElementById('modalNama').textContent = nama;
-        document.getElementById('modalPeran').textContent = peran;
-        document.getElementById('modalStatus').textContent = status;
+        const modalImage = document.getElementById('modalImage');
+        const modalNama = document.getElementById('modalNama');
+        const modalPeran = document.getElementById('modalPeran');
+        const modalStatus = document.getElementById('modalStatus');
+        
+        if (modalImage) modalImage.src = img;
+        if (modalNama) modalNama.textContent = nama;
+        if (modalPeran) modalPeran.textContent = peran;
+        if (modalStatus) modalStatus.textContent = status;
         
         // Open modal
         modal.classList.add('active');
@@ -71,13 +77,15 @@ muridCards.forEach(card => {
 });
 
 // Close modal when X button is clicked
-closeBtn.addEventListener('click', function() {
-    modal.classList.remove('active');
-});
+if (closeBtn) {
+    closeBtn.addEventListener('click', function() {
+        if (modal) modal.classList.remove('active');
+    });
+}
 
 // Close modal when clicking outside the modal content
 window.addEventListener('click', function(event) {
-    if (event.target === modal) {
+    if (modal && event.target === modal) {
         modal.classList.remove('active');
     }
 });
