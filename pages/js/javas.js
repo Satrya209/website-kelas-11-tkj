@@ -135,6 +135,12 @@ const photos2 = [
     {src: "assets/foto10.jpeg", caption: "kunjungan Industri"}
 ];
 
+const photos3 = [
+    {src: "assets/photo_upacara.jpeg", caption: "Petugas Upacara"},
+    {src: "assets/photo_upacara-2.jpeg", caption: "Petugas Upacara"},
+    {src: "assets/photo_upacara-3.jpeg", caption: "Petugas Upacara"}
+];
+
 let current = 0;
 const img = document.getElementById('galeriImg');
 const captionText = document.getElementById('captionText');
@@ -146,6 +152,12 @@ const img2 = document.getElementById('galeriImg2');
 const captionText2 = document.getElementById('captionText2');
 const label2 = document.getElementById('indexLabel2');
 const galeriItem2 = document.getElementById('galeriItem2')
+
+let current3 = 0;
+const img3 = document.getElementById('galeriImg3');
+const captionText3 = document.getElementById('captionText3');
+const label3 = document.getElementById('indexLabel3');
+const galeriItem3 = document.getElementById('galeriItem3')
 
 
 //Rendering and Navigations
@@ -183,6 +195,23 @@ function next2() {
     render2();
 }
 
+function render3() {
+    img3.src = photos3[current3].src;
+    img3.alt = photos3[current3].caption;
+    captionText3.textContent = photos3[current3].caption;
+    label3.textContent = `${current3 + 1} / ${photos3.length}`;
+}
+
+function prev3() {
+    current3 = (current3 - 1 + photos3.length) % photos3.length;
+    render3();
+}
+
+function next3() {
+    current3 = (current3 + 1) % photos3.length;
+    render3();
+}
+
 
 // Klik kiri foto = foto sebelumnya, kanan foto = foto selanjutnya
 if (galeriItem) {
@@ -206,6 +235,19 @@ if (galeriItem2) {
             prev2();
         } else {
             next2();
+        }
+    });
+}
+
+if (galeriItem3) {
+    galeriItem3.addEventListener('click', (e) => {
+        const rect = galeriItem3.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+
+        if (clickX < rect.width / 2) {
+            prev3();
+        } else {
+            next3();
         }
     });
 }
@@ -241,8 +283,24 @@ if (galeriItem2) {
     });
 }
 
+let touchStart3X = 0;
+if (galeriItem3) {
+    galeriItem3.addEventListener('touchstart', (e) => {
+        touchStart3X = e.changedTouches[0].screenX;
+    });
+    galeriItem3.addEventListener('touchend', (e) => {
+        const diff3 = e.changedTouches[0].screenX - touchStart3X;
+        if (diff3 > 50) {
+            prev3();
+        } else if (diff3 < -50) {
+            next3();
+        }
+    });
+}
+
 render();
 render2();
+render3();
 
 
 
